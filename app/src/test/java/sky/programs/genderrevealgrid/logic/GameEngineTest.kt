@@ -48,12 +48,21 @@ class GameEngineTest {
 
     @Test
     fun createRevealSequence_canProduceVisibleRunsInsteadOfStrictAlternation() {
-        val hasRun = (0..40).any { seed ->
-            val sequence = GameEngine.createRevealSequence(WinningGender.BOY, Random(seed))
-            sequence.windowed(2).any { it[0] == it[1] }
-        }
+        val sequence = GameEngine.createRevealSequence(
+            WinningGender.BOY,
+            BooleanSequenceRandom(
+                false,
+                false,
+                true,
+                true,
+                false,
+                true,
+                false,
+                true
+            )
+        )
 
-        assertTrue(hasRun)
+        assertTrue(sequence.windowed(2).any { it[0] == it[1] })
     }
 
     @Test
@@ -143,5 +152,16 @@ class GameEngineTest {
             celebrationMessage = RevealMessageConfig("Title", "Subtitle"),
             theme = RevealCatalog.themes.first()
         )
+    }
+
+    private class BooleanSequenceRandom(vararg values: Boolean) : Random() {
+        private val sequence = values.toList()
+        private var index = 0
+
+        override fun nextBits(bitCount: Int): Int {
+            val nextValue = sequence.getOrElse(index) { sequence.lastOrNull() ?: false }
+            index += 1
+            return if (nextValue) 1 else 0
+        }
     }
 }

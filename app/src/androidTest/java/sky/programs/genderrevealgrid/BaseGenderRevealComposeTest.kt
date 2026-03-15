@@ -69,7 +69,7 @@ abstract class BaseGenderRevealComposeTest(localeTag: String) {
     }
 
     protected fun assertTextDisplayed(@StringRes resId: Int) {
-        composeRule.onNodeWithText(string(resId)).assertExists()
+        composeRule.onNodeWithText(string(resId)).assertIsDisplayed()
     }
 
     protected fun assertTaggedNodeHasOneOfTexts(tag: String, vararg expectedTexts: String) {
