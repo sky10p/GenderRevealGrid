@@ -3,6 +3,8 @@ plugins {
     alias(libs.plugins.kotlin.compose)
 }
 
+val workspaceDebugKeystore = rootProject.file(".android/debug.keystore")
+
 android {
     namespace = "sky.programs.genderrevealgrid"
     compileSdk {
@@ -21,7 +23,24 @@ android {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
+    signingConfigs {
+        create("workspaceDebug") {
+            if (workspaceDebugKeystore.exists()) {
+                storeFile = workspaceDebugKeystore
+                storePassword = "android"
+                keyAlias = "androiddebugkey"
+                keyPassword = "android"
+            }
+        }
+    }
+
     buildTypes {
+        debug {
+            if (workspaceDebugKeystore.exists()) {
+                signingConfig = signingConfigs.getByName("workspaceDebug")
+            }
+        }
+
         release {
             isMinifyEnabled = false
             proguardFiles(
@@ -41,6 +60,7 @@ android {
 
 dependencies {
     implementation(libs.androidx.core.ktx)
+    implementation(libs.androidx.core.splashscreen)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
     implementation(platform(libs.androidx.compose.bom))

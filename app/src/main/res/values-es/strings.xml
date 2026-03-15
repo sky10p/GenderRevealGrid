@@ -1,0 +1,45 @@
+<resources>
+    <string name="app_name">Gender Reveal Grid</string>
+
+    <string name="setup_title">Configura la sorpresa</string>
+    <string name="setup_subtitle">Elige el resultado ganador, personaliza el momento del tablero y el mensaje final, y selecciona el tema.</string>
+    <string name="start_reveal">Comenzar revelación</string>
+
+    <string name="winning_result_title">Resultado ganador</string>
+    <string name="winning_result_subtitle">Selector discreto del resultado final del bebé.</string>
+    <string name="gender_boy">Niño</string>
+    <string name="gender_girl">Niña</string>
+    <string name="board_intro_title">Intro del tablero</string>
+    <string name="board_intro_subtitle">Estos textos adorables aparecen sobre la cuadrícula 3x3 antes de la revelación final.</string>
+    <string name="board_title_label">Título del tablero</string>
+    <string name="board_subtitle_label">Subtítulo del tablero</string>
+
+    <string name="final_reveal_title">Revelación final</string>
+    <string name="final_reveal_subtitle">Estos textos aparecen en la celebración tras descubrir la novena carta.</string>
+    <string name="celebration_title_label">Título de la celebración</string>
+    <string name="celebration_subtitle_label">Subtítulo de la celebración</string>
+
+    <string name="theme_visual_title">Tema visual</string>
+    <string name="theme_visual_subtitle">Cada tema cambia el fondo, las decoraciones y el estilo general del tablero.</string>
+    <string name="theme_included">Tema incluido</string>
+    <string name="theme_premium">Tema premium</string>
+    <string name="theme_name_cotton_sky">Cielo de algodón</string>
+    <string name="theme_name_golden_dust">Polvo dorado</string>
+    <string name="theme_name_twilight_clouds">Nubes crepusculares</string>
+    <string name="theme_name_celebration_pop">Estallido festivo</string>
+
+    <string name="revealed_progress_title">Progreso descubierto</string>
+    <string name="revealed_progress_subtitle">Aquí solo se cuentan los círculos ya descubiertos, así que la respuesta final sigue oculta hasta el último toque.</string>
+    <string name="boys_revealed_label">Niño</string>
+    <string name="girls_revealed_label">Niña</string>
+    <string name="hidden_revealed_label">Ocultas</string>
+
+    <string name="back_to_setup">Volver a configuración</string>
+
+    <string name="default_board_title">¡Sorpresa!</string>
+    <string name="default_board_subtitle">¿Qué será el bebé?</string>
+    <string name="default_boy_title">¡Es niño!</string>
+    <string name="default_boy_subtitle">Nueve círculos para descubrir la gran sorpresa.</string>
+    <string name="default_girl_title">¡Es niña!</string>
+    <string name="default_girl_subtitle">Cada carta acercó un poco más el gran momento.</string>
+</resources>
