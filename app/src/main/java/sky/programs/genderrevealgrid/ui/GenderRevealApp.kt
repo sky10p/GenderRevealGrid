@@ -43,19 +43,18 @@ private fun SetupRoute(onStart: (RevealSetupConfig) -> Unit) {
     var selectedThemeId by rememberSaveable { mutableStateOf(RevealCatalog.themes.first().id) }
 
     val gender = remember(selectedGender) { WinningGender.valueOf(selectedGender) }
-    val defaultBoardMessages = remember(context.resources.configuration) {
-        context.defaultBoardHeaderMessages()
+    val selectedTheme = remember(selectedThemeId) { RevealCatalog.themeById(selectedThemeId) }
+    val defaultBoardMessages = remember(selectedThemeId, context.resources.configuration) {
+        context.defaultBoardHeaderMessages(selectedTheme)
     }
-    val defaultCelebrationMessages = remember(gender, context.resources.configuration) {
-        context.defaultCelebrationMessagesFor(gender)
+    val defaultCelebrationMessages = remember(selectedThemeId, gender, context.resources.configuration) {
+        context.defaultCelebrationMessagesFor(selectedTheme, gender)
     }
 
     var boardTitle by rememberSaveable { mutableStateOf(defaultBoardMessages.title) }
     var boardSubtitle by rememberSaveable { mutableStateOf(defaultBoardMessages.subtitle) }
     var celebrationTitle by rememberSaveable { mutableStateOf(defaultCelebrationMessages.title) }
     var celebrationSubtitle by rememberSaveable { mutableStateOf(defaultCelebrationMessages.subtitle) }
-
-    val selectedTheme = remember(selectedThemeId) { RevealCatalog.themeById(selectedThemeId) }
 
     SetupScreen(
         selectedGender = gender,
@@ -68,6 +67,7 @@ private fun SetupRoute(onStart: (RevealSetupConfig) -> Unit) {
         onGenderSelected = { newGender ->
             if (newGender == gender) return@SetupScreen
             val updatedMessages = context.updatedCelebrationMessagesForGender(
+                theme = selectedTheme,
                 previousGender = gender,
                 newGender = newGender,
                 currentMessages = RevealMessageConfig(
@@ -83,21 +83,49 @@ private fun SetupRoute(onStart: (RevealSetupConfig) -> Unit) {
         onBoardSubtitleChanged = { boardSubtitle = it },
         onCelebrationTitleChanged = { celebrationTitle = it },
         onCelebrationSubtitleChanged = { celebrationSubtitle = it },
-        onThemeSelected = { selectedThemeId = it.id },
+        onThemeSelected = { newTheme ->
+            if (newTheme.id == selectedTheme.id) return@SetupScreen
+            val updatedBoard = context.updatedBoardMessagesForTheme(
+                previousTheme = selectedTheme,
+                newTheme = newTheme,
+                currentMessages = RevealMessageConfig(
+                    title = boardTitle,
+                    subtitle = boardSubtitle
+                )
+            )
+            val updatedCelebration = context.updatedCelebrationMessagesForTheme(
+                previousTheme = selectedTheme,
+                newTheme = newTheme,
+                gender = gender,
+                currentMessages = RevealMessageConfig(
+                    title = celebrationTitle,
+                    subtitle = celebrationSubtitle
+                )
+            )
+            selectedThemeId = newTheme.id
+            boardTitle = updatedBoard.title
+            boardSubtitle = updatedBoard.subtitle
+            celebrationTitle = updatedCelebration.title
+            celebrationSubtitle = updatedCelebration.subtitle
+        },
         onStartReveal = {
             onStart(
                 RevealSetupConfig(
                     winningGender = gender,
                     boardHeaderMessage = RevealMessageConfig(
-                        title = boardTitle.trim().ifEmpty { context.defaultBoardHeaderMessages().title },
+                        title = boardTitle.trim().ifEmpty {
+                            context.defaultBoardHeaderMessages(selectedTheme).title
+                        },
                         subtitle = boardSubtitle.trim()
-                            .ifEmpty { context.defaultBoardHeaderMessages().subtitle }
+                            .ifEmpty { context.defaultBoardHeaderMessages(selectedTheme).subtitle }
                     ),
                     celebrationMessage = RevealMessageConfig(
                         title = celebrationTitle.trim()
-                            .ifEmpty { context.defaultCelebrationMessagesFor(gender).title },
+                            .ifEmpty { context.defaultCelebrationMessagesFor(selectedTheme, gender).title },
                         subtitle = celebrationSubtitle.trim()
-                            .ifEmpty { context.defaultCelebrationMessagesFor(gender).subtitle }
+                            .ifEmpty {
+                                context.defaultCelebrationMessagesFor(selectedTheme, gender).subtitle
+                            }
                     ),
                     theme = selectedTheme
                 )

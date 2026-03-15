@@ -1,6 +1,8 @@
 package sky.programs.genderrevealgrid.ui
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.selection.selectable
 import androidx.compose.foundation.selection.selectableGroup
 import androidx.compose.foundation.layout.Arrangement
@@ -20,7 +22,6 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.Button
 import androidx.compose.material3.FilterChip
 import androidx.compose.material3.FilterChipDefaults
 import androidx.compose.material3.MaterialTheme
@@ -28,8 +29,10 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
@@ -73,22 +76,33 @@ internal fun SetupScreen(
                 Box(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .background(Color.White.copy(alpha = 0.88f))
+                        .background(selectedTheme.setupBottomBarColor())
                         .navigationBarsPadding()
                         .padding(horizontal = 20.dp, vertical = 14.dp)
                         .testTag(TestTags.SetupBottomCta)
                 ) {
-                    Button(
-                        onClick = onStartReveal,
+                    Box(
                         modifier = Modifier
                             .fillMaxWidth()
                             .height(58.dp)
+                            .shadow(12.dp, RoundedCornerShape(20.dp), clip = false)
+                            .clip(RoundedCornerShape(20.dp))
+                            .background(selectedTheme.buttonBrush())
+                            .border(
+                                1.dp,
+                                Color.White.copy(alpha = if (selectedTheme.isPremium) 0.45f else 0.22f),
+                                RoundedCornerShape(20.dp)
+                            )
+                            .clickable(onClick = onStartReveal)
                             .testTag(TestTags.StartRevealButton),
-                        shape = RoundedCornerShape(20.dp)
+                        contentAlignment = Alignment.Center
                     ) {
                         Text(
                             text = stringResource(R.string.start_reveal),
-                            style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Bold)
+                            style = MaterialTheme.typography.titleMedium.copy(
+                                fontWeight = FontWeight.Bold,
+                                color = Color.White
+                            )
                         )
                     }
                 }
@@ -130,7 +144,7 @@ internal fun SetupScreen(
                     selectedTheme = selectedTheme,
                     onThemeSelected = onThemeSelected
                 )
-                Spacer(modifier = Modifier.height(90.dp))
+                Spacer(modifier = Modifier.height(180.dp))
             }
         }
     }
@@ -298,10 +312,18 @@ private fun ThemeCard(
     modifier: Modifier = Modifier,
     onClick: () -> Unit
 ) {
+    val shape = RoundedCornerShape(24.dp)
+
     Box(
         modifier = modifier
-            .clip(RoundedCornerShape(24.dp))
+            .shadow(if (selected) 16.dp else 8.dp, shape, clip = false)
+            .clip(shape)
             .background(theme.backgroundBrush())
+            .border(
+                width = if (selected) 1.5.dp else 1.dp,
+                color = theme.themeCardStrokeColor(selected),
+                shape = shape
+            )
             .testTag(TestTags.themeCard(theme.id))
             .selectable(
                 selected = selected,
@@ -313,13 +335,13 @@ private fun ThemeCard(
         Box(
             modifier = Modifier
                 .matchParentSize()
-                .clip(RoundedCornerShape(24.dp))
-                .background(Color.White.copy(alpha = if (selected) 0.18f else 0.06f))
+                .clip(shape)
+                .background(theme.themeCardVeilColor(selected))
         )
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .height(138.dp),
+                .height(150.dp),
             verticalArrangement = Arrangement.SpaceBetween
         ) {
             Row(
@@ -332,22 +354,32 @@ private fun ThemeCard(
                     modifier = Modifier.size(44.dp)
                 )
                 if (theme.isPremium) {
-                    PremiumBadge()
+                    PremiumBadge(theme = theme)
                 }
             }
+            ThemeCardPreview(
+                theme = theme,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(56.dp)
+            )
             Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
                 Text(
                     text = stringResource(theme.nameResId),
                     style = MaterialTheme.typography.titleMedium.copy(
+                        fontFamily = theme.themeCardTitleFontFamily(),
                         fontWeight = FontWeight.Bold,
-                        color = Color(0xFF2B2D42)
+                        color = theme.themeCardTitleColor()
                     )
                 )
                 Text(
                     text = stringResource(
                         if (theme.isPremium) R.string.theme_premium else R.string.theme_included
                     ),
-                    style = MaterialTheme.typography.bodyMedium.copy(color = Color(0xFF5F6678))
+                    style = MaterialTheme.typography.bodyMedium.copy(
+                        fontFamily = theme.themeCardSubtitleFontFamily(),
+                        color = theme.themeCardSubtitleColor()
+                    )
                 )
             }
         }

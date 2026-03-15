@@ -25,8 +25,8 @@
     <string name="theme_premium">Tema premium</string>
     <string name="theme_name_cotton_sky">Cielo de algodón</string>
     <string name="theme_name_golden_dust">Polvo dorado</string>
-    <string name="theme_name_twilight_clouds">Nubes crepusculares</string>
-    <string name="theme_name_celebration_pop">Estallido festivo</string>
+    <string name="theme_name_superhero">Superhero</string>
+    <string name="theme_name_magic_world">Magic world</string>
 
     <string name="revealed_progress_title">Progreso descubierto</string>
     <string name="revealed_progress_subtitle">Aquí solo se cuentan los círculos ya descubiertos, así que la respuesta final sigue oculta hasta el último toque.</string>
@@ -44,4 +44,18 @@
     <string name="default_boy_subtitle">La familia crece con un hermoso niño</string>
     <string name="default_girl_title">¡Es niña!</string>
     <string name="default_girl_subtitle">La familia crece con una hermosa niña</string>
+
+    <string name="default_superhero_board_title">Misión revelación</string>
+    <string name="default_superhero_board_subtitle">Nueve toques separan al equipo del secreto final del héroe.</string>
+    <string name="default_superhero_boy_title">Héroe revelado: ¡es niño!</string>
+    <string name="default_superhero_boy_subtitle">La insignia final se enciende para un valiente niño.</string>
+    <string name="default_superhero_girl_title">Héroe revelado: ¡es niña!</string>
+    <string name="default_superhero_girl_subtitle">La insignia final se enciende para una valiente niña.</string>
+
+    <string name="default_magic_world_board_title">Hay un hechizo esperando</string>
+    <string name="default_magic_world_board_subtitle">Bajo la noche del castillo, el secreto final sigue oculto hasta el ultimo toque.</string>
+    <string name="default_magic_world_boy_title">El hechizo revela un niño</string>
+    <string name="default_magic_world_boy_subtitle">Las velas brillan y la noche encantada da la bienvenida a un niño.</string>
+    <string name="default_magic_world_girl_title">El hechizo revela una niña</string>
+    <string name="default_magic_world_girl_subtitle">Las velas brillan y la noche encantada da la bienvenida a una niña.</string>
 </resources>

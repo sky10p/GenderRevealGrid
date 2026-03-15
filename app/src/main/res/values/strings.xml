@@ -25,8 +25,8 @@
     <string name="theme_premium">Premium theme</string>
     <string name="theme_name_cotton_sky">Cotton Sky</string>
     <string name="theme_name_golden_dust">Golden Dust</string>
-    <string name="theme_name_twilight_clouds">Twilight Clouds</string>
-    <string name="theme_name_celebration_pop">Celebration Pop</string>
+    <string name="theme_name_superhero">Superhero</string>
+    <string name="theme_name_magic_world">Magic world</string>
 
     <string name="revealed_progress_title">Reveal progress</string>
     <string name="revealed_progress_subtitle">Only discovered circles are counted here, so the final answer stays hidden until the last tap.</string>
@@ -44,4 +44,18 @@
     <string name="default_boy_subtitle">The family grows with a beautiful boy.</string>
     <string name="default_girl_title">It\'s a girl!</string>
     <string name="default_girl_subtitle">The family grows with a beautiful girl.</string>
+
+    <string name="default_superhero_board_title">Mission reveal</string>
+    <string name="default_superhero_board_subtitle">Nine taps stand between the team and the final hero secret.</string>
+    <string name="default_superhero_boy_title">Hero unlocked: it\'s a boy!</string>
+    <string name="default_superhero_boy_subtitle">The final badge lights up for a brave little boy.</string>
+    <string name="default_superhero_girl_title">Hero unlocked: it\'s a girl!</string>
+    <string name="default_superhero_girl_subtitle">The final badge lights up for a fearless little girl.</string>
+
+    <string name="default_magic_world_board_title">A spell is waiting</string>
+    <string name="default_magic_world_board_subtitle">Under the castle night, the final secret stays hidden until the last touch.</string>
+    <string name="default_magic_world_boy_title">The spell reveals a boy</string>
+    <string name="default_magic_world_boy_subtitle">Candles glow and the enchanted night welcomes a little boy.</string>
+    <string name="default_magic_world_girl_title">The spell reveals a girl</string>
+    <string name="default_magic_world_girl_subtitle">Candles glow and the enchanted night welcomes a little girl.</string>
 </resources>

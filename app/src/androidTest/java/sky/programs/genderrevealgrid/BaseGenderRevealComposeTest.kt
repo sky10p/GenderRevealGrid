@@ -34,7 +34,7 @@ abstract class BaseGenderRevealComposeTest(localeTag: String) {
         boardSubtitle: String,
         celebrationTitle: String,
         celebrationSubtitle: String,
-        themeId: String = "celebration-pop"
+        themeId: String = "superhero"
     ) {
         clickTag(TestTags.SetupGenderBoy)
         composeRule.onNodeWithTag(TestTags.BoardTitleInput, useUnmergedTree = true)

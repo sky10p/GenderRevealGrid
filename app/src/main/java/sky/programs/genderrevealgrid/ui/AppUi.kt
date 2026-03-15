@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.annotation.StringRes
 import sky.programs.genderrevealgrid.R
 import sky.programs.genderrevealgrid.model.RevealMessageConfig
+import sky.programs.genderrevealgrid.model.ThemeConfig
 import sky.programs.genderrevealgrid.model.WinningGender
 
 object TestTags {
@@ -34,27 +35,80 @@ object TestTags {
     fun progressDot(index: Int): String = "progress_dot_$index"
 }
 
-internal fun Context.defaultBoardHeaderMessages(): RevealMessageConfig {
+internal fun Context.defaultBoardHeaderMessages(theme: ThemeConfig): RevealMessageConfig {
     return RevealMessageConfig(
-        title = getString(R.string.default_board_title),
-        subtitle = getString(R.string.default_board_subtitle)
+        title = getString(theme.defaultMessages.boardTitleResId),
+        subtitle = getString(theme.defaultMessages.boardSubtitleResId)
     )
 }
 
-internal fun Context.defaultCelebrationMessagesFor(gender: WinningGender): RevealMessageConfig {
+internal fun Context.defaultCelebrationMessagesFor(
+    theme: ThemeConfig,
+    gender: WinningGender
+): RevealMessageConfig {
     return RevealMessageConfig(
-        title = getString(gender.defaultCelebrationTitleResId()),
-        subtitle = getString(gender.defaultCelebrationSubtitleResId())
+        title = getString(gender.defaultCelebrationTitleResId(theme)),
+        subtitle = getString(gender.defaultCelebrationSubtitleResId(theme))
     )
 }
 
 internal fun Context.updatedCelebrationMessagesForGender(
+    theme: ThemeConfig,
     previousGender: WinningGender,
     newGender: WinningGender,
     currentMessages: RevealMessageConfig
 ): RevealMessageConfig {
-    val oldDefaults = defaultCelebrationMessagesFor(previousGender)
-    val newDefaults = defaultCelebrationMessagesFor(newGender)
+    val oldDefaults = defaultCelebrationMessagesFor(theme, previousGender)
+    val newDefaults = defaultCelebrationMessagesFor(theme, newGender)
+    return RevealMessageConfig(
+        title = if (currentMessages.title.isBlank() || currentMessages.title == oldDefaults.title) {
+            newDefaults.title
+        } else {
+            currentMessages.title
+        },
+        subtitle = if (
+            currentMessages.subtitle.isBlank() ||
+            currentMessages.subtitle == oldDefaults.subtitle
+        ) {
+            newDefaults.subtitle
+        } else {
+            currentMessages.subtitle
+        }
+    )
+}
+
+internal fun Context.updatedBoardMessagesForTheme(
+    previousTheme: ThemeConfig,
+    newTheme: ThemeConfig,
+    currentMessages: RevealMessageConfig
+): RevealMessageConfig {
+    val oldDefaults = defaultBoardHeaderMessages(previousTheme)
+    val newDefaults = defaultBoardHeaderMessages(newTheme)
+    return RevealMessageConfig(
+        title = if (currentMessages.title.isBlank() || currentMessages.title == oldDefaults.title) {
+            newDefaults.title
+        } else {
+            currentMessages.title
+        },
+        subtitle = if (
+            currentMessages.subtitle.isBlank() ||
+            currentMessages.subtitle == oldDefaults.subtitle
+        ) {
+            newDefaults.subtitle
+        } else {
+            currentMessages.subtitle
+        }
+    )
+}
+
+internal fun Context.updatedCelebrationMessagesForTheme(
+    previousTheme: ThemeConfig,
+    newTheme: ThemeConfig,
+    gender: WinningGender,
+    currentMessages: RevealMessageConfig
+): RevealMessageConfig {
+    val oldDefaults = defaultCelebrationMessagesFor(previousTheme, gender)
+    val newDefaults = defaultCelebrationMessagesFor(newTheme, gender)
     return RevealMessageConfig(
         title = if (currentMessages.title.isBlank() || currentMessages.title == oldDefaults.title) {
             newDefaults.title
@@ -77,9 +131,17 @@ internal fun WinningGender.labelResId(): Int =
     if (this == WinningGender.BOY) R.string.gender_boy else R.string.gender_girl
 
 @StringRes
-private fun WinningGender.defaultCelebrationTitleResId(): Int =
-    if (this == WinningGender.BOY) R.string.default_boy_title else R.string.default_girl_title
+private fun WinningGender.defaultCelebrationTitleResId(theme: ThemeConfig): Int =
+    if (this == WinningGender.BOY) {
+        theme.defaultMessages.boyCelebrationTitleResId
+    } else {
+        theme.defaultMessages.girlCelebrationTitleResId
+    }
 
 @StringRes
-private fun WinningGender.defaultCelebrationSubtitleResId(): Int =
-    if (this == WinningGender.BOY) R.string.default_boy_subtitle else R.string.default_girl_subtitle
+private fun WinningGender.defaultCelebrationSubtitleResId(theme: ThemeConfig): Int =
+    if (this == WinningGender.BOY) {
+        theme.defaultMessages.boyCelebrationSubtitleResId
+    } else {
+        theme.defaultMessages.girlCelebrationSubtitleResId
+    }

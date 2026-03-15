@@ -6,6 +6,7 @@ import androidx.compose.ui.test.assertTextContains
 import androidx.compose.ui.test.onAllNodesWithText
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
+import androidx.compose.ui.test.performTextReplacement
 import org.junit.Test
 import sky.programs.genderrevealgrid.ui.TestTags
 
@@ -97,6 +98,27 @@ class GenderRevealFlowEnglishTest : BaseGenderRevealComposeTest(localeTag = "en"
     }
 
     @Test
+    fun switchingTheme_updatesOnlyUntouchedDefaultMessages() {
+        clickTag(TestTags.themeCard("superhero"))
+        composeRule.onNodeWithTag(TestTags.BoardTitleInput, useUnmergedTree = true)
+            .assertTextContains(string(R.string.default_superhero_board_title))
+        composeRule.onNodeWithTag(TestTags.CelebrationTitleInput, useUnmergedTree = true)
+            .assertTextContains(string(R.string.default_superhero_girl_title))
+
+        composeRule.onNodeWithTag(TestTags.BoardTitleInput, useUnmergedTree = true)
+            .performTextReplacement("Custom board")
+
+        clickTag(TestTags.themeCard("magic-world"))
+
+        composeRule.onNodeWithTag(TestTags.BoardTitleInput, useUnmergedTree = true)
+            .assertTextContains("Custom board")
+        composeRule.onNodeWithTag(TestTags.BoardSubtitleInput, useUnmergedTree = true)
+            .assertTextContains(string(R.string.default_magic_world_board_subtitle))
+        composeRule.onNodeWithTag(TestTags.CelebrationTitleInput, useUnmergedTree = true)
+            .assertTextContains(string(R.string.default_magic_world_girl_title))
+    }
+
+    @Test
     fun progressFooter_showsOnlyRevealedCountsAfterEightCards() {
         startRevealWithCustomMessages(
             boardTitle = "Tiny reveal",
@@ -123,10 +145,10 @@ class GenderRevealFlowEnglishTest : BaseGenderRevealComposeTest(localeTag = "en"
             boardSubtitle = "The answer waits for the last tap.",
             celebrationTitle = "Big reveal",
             celebrationSubtitle = "Now everyone knows.",
-            themeId = "celebration-pop"
+            themeId = "magic-world"
         )
 
-        composeRule.onAllNodesWithText(string(R.string.theme_name_celebration_pop))
+        composeRule.onAllNodesWithText(string(R.string.theme_name_magic_world))
             .assertCountEquals(0)
     }
 }

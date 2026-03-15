@@ -18,7 +18,6 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -53,7 +52,6 @@ import sky.programs.genderrevealgrid.model.RevealCard
 import sky.programs.genderrevealgrid.model.RevealSetupConfig
 import sky.programs.genderrevealgrid.model.ThemeConfig
 import sky.programs.genderrevealgrid.model.WinningGender
-import sky.programs.genderrevealgrid.ui.theme.StageAccentFamily
 import sky.programs.genderrevealgrid.ui.theme.StageRoundedFamily
 
 @Composable
@@ -502,15 +500,7 @@ private fun CelebrationOverlay(
                     modifier = Modifier
                         .fillMaxWidth()
                         .clip(contentShape)
-                        .background(
-                            Brush.verticalGradient(
-                                listOf(
-                                    Color.White,
-                                    setup.theme.boardFrameColor.copy(alpha = 0.24f),
-                                    Color.White
-                                )
-                            )
-                        )
+                        .background(setup.theme.celebrationBrush())
                         .border(1.dp, setup.theme.boardStrokeColor.copy(alpha = 0.34f), contentShape)
                         .padding(horizontal = 20.dp, vertical = 24.dp)
                 ) {
@@ -528,7 +518,7 @@ private fun CelebrationOverlay(
                             text = setup.celebrationMessage.title,
                             textAlign = TextAlign.Center,
                             style = MaterialTheme.typography.headlineLarge.copy(
-                                fontFamily = StageRoundedFamily,
+                                fontFamily = setup.theme.overlayTitleFontFamily(),
                                 fontWeight = FontWeight.Bold,
                                 fontSize = 44.sp,
                                 lineHeight = 46.sp,
@@ -539,8 +529,8 @@ private fun CelebrationOverlay(
                             text = setup.celebrationMessage.subtitle,
                             textAlign = TextAlign.Center,
                             style = MaterialTheme.typography.headlineMedium.copy(
-                                fontFamily = StageAccentFamily,
-                                fontWeight = FontWeight.Normal,
+                                fontFamily = setup.theme.overlaySubtitleFontFamily(),
+                                fontWeight = setup.theme.overlaySubtitleFontWeight(),
                                 fontSize = 30.sp,
                                 lineHeight = 34.sp,
                                 color = setup.theme.celebrationAccent

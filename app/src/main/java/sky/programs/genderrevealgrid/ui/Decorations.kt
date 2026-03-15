@@ -159,6 +159,123 @@ private fun decorationPlacement(
             )
         }
 
+        ThemeMotion.LIGHTNING_FLASH -> {
+            val pulse = (0.35f + 0.65f * kotlin.math.abs(wave)).coerceIn(0f, 1f)
+            DecorationPlacement(
+                x = baseX + secondaryWave * driftXPx * 0.15f,
+                y = baseY + wave * driftYPx * 0.18f,
+                alpha = spec.minAlpha + (spec.maxAlpha - spec.minAlpha) * pulse,
+                scale = 0.94f + 0.16f * pulse,
+                rotation = spec.rotationDegrees + wave * 8f
+            )
+        }
+
+        ThemeMotion.HERO_PULSE -> {
+            val pulse = 0.5f + 0.5f * secondaryWave
+            DecorationPlacement(
+                x = baseX + wave * driftXPx * 0.2f,
+                y = baseY + secondaryWave * driftYPx * 0.18f,
+                alpha = spec.minAlpha + (spec.maxAlpha - spec.minAlpha) * pulse,
+                scale = 0.86f + 0.34f * pulse,
+                rotation = spec.rotationDegrees + wave * 10f
+            )
+        }
+
+        ThemeMotion.HERO_FLYBY -> {
+            val travelWidth = width + sizePx * 4f
+            DecorationPlacement(
+                x = -sizePx * 2f + progress * travelWidth,
+                y = baseY + secondaryWave * driftYPx,
+                alpha = spec.minAlpha + (spec.maxAlpha - spec.minAlpha) * (0.6f + 0.4f * progress),
+                scale = 1f,
+                rotation = spec.rotationDegrees + wave * 2f
+            )
+        }
+
+        ThemeMotion.SKYLINE_GLIDE -> {
+            val travelWidth = width + sizePx * 1.2f
+            DecorationPlacement(
+                x = -sizePx * 0.1f + progress * travelWidth * 0.18f,
+                y = baseY + secondaryWave * driftYPx * 0.08f,
+                alpha = spec.minAlpha + (spec.maxAlpha - spec.minAlpha) * 0.92f,
+                scale = 1f,
+                rotation = spec.rotationDegrees
+            )
+        }
+
+        ThemeMotion.OWL_GLIDE -> {
+            val travelWidth = width + sizePx * 2f
+            DecorationPlacement(
+                x = -sizePx + progress * travelWidth,
+                y = baseY + secondaryWave * driftYPx * 0.28f,
+                alpha = spec.minAlpha + (spec.maxAlpha - spec.minAlpha) * (0.6f + 0.4f * progress),
+                scale = 0.92f + 0.08f * (0.5f + 0.5f * wave),
+                rotation = spec.rotationDegrees + wave * 5f
+            )
+        }
+
+        ThemeMotion.CANDLE_FLOAT -> DecorationPlacement(
+            x = baseX + wave * driftXPx * 0.18f,
+            y = baseY + secondaryWave * driftYPx * 0.45f,
+            alpha = spec.minAlpha + (spec.maxAlpha - spec.minAlpha) * (0.66f + 0.34f * progress),
+            scale = 0.96f + 0.06f * (0.5f + 0.5f * secondaryWave),
+            rotation = spec.rotationDegrees + wave * 3f
+        )
+
+        ThemeMotion.SPELL_SWIRL -> {
+            val orbitX = kotlin.math.cos((progress * 2f * PI).toFloat()) * driftXPx * 0.45f
+            val orbitY = kotlin.math.sin((progress * 2f * PI).toFloat()) * driftYPx * 0.35f
+            val pulse = 0.5f + 0.5f * secondaryWave
+            DecorationPlacement(
+                x = baseX + orbitX,
+                y = baseY + orbitY,
+                alpha = spec.minAlpha + (spec.maxAlpha - spec.minAlpha) * pulse,
+                scale = 0.9f + 0.16f * pulse,
+                rotation = spec.rotationDegrees + progress * 42f
+            )
+        }
+
+        ThemeMotion.DUST_ASCEND -> {
+            val visibility = (1f - (kotlin.math.abs(progress - 0.5f) / 0.5f)).coerceIn(0f, 1f)
+            DecorationPlacement(
+                x = baseX + wave * driftXPx * 0.6f,
+                y = baseY + driftYPx * 0.4f - progress * driftYPx * 1.6f,
+                alpha = spec.minAlpha + (spec.maxAlpha - spec.minAlpha) * visibility,
+                scale = 0.82f + 0.22f * visibility,
+                rotation = spec.rotationDegrees + wave * 4f
+            )
+        }
+
+        ThemeMotion.MOON_DRIFT -> DecorationPlacement(
+            x = baseX + wave * driftXPx * 0.3f,
+            y = baseY + secondaryWave * driftYPx * 0.18f,
+            alpha = spec.minAlpha + (spec.maxAlpha - spec.minAlpha) * (0.85f + 0.15f * progress),
+            scale = 0.98f + 0.04f * (0.5f + 0.5f * secondaryWave),
+            rotation = spec.rotationDegrees + wave * 2f
+        )
+
+        ThemeMotion.PARALLAX_SLIDE -> {
+            val travelWidth = width + sizePx
+            DecorationPlacement(
+                x = -sizePx * 0.1f + progress * travelWidth * 0.14f,
+                y = baseY + secondaryWave * driftYPx * 0.05f,
+                alpha = spec.minAlpha + (spec.maxAlpha - spec.minAlpha) * 0.94f,
+                scale = 1f,
+                rotation = spec.rotationDegrees
+            )
+        }
+
+        ThemeMotion.RUNE_GLOW -> {
+            val pulse = 0.5f + 0.5f * wave
+            DecorationPlacement(
+                x = baseX,
+                y = baseY + wave * driftYPx * 0.1f,
+                alpha = spec.minAlpha + (spec.maxAlpha - spec.minAlpha) * pulse,
+                scale = 0.95f + 0.1f * pulse,
+                rotation = spec.rotationDegrees + wave * 5f
+            )
+        }
+
         ThemeMotion.DRIFT -> DecorationPlacement(
             x = baseX + wave * driftXPx * 2f,
             y = baseY + (-driftYPx + driftYPx * 2f * progress),
@@ -175,6 +292,17 @@ private fun ThemeDecorationSpec.visibilityBoost(): Float =
         ThemeMotion.CLOUD_SWEEP -> 1.3f
         ThemeMotion.HEART_RISE -> 1.45f
         ThemeMotion.TWINKLE -> 1.5f
+        ThemeMotion.LIGHTNING_FLASH -> 1.6f
+        ThemeMotion.HERO_PULSE -> 1.45f
+        ThemeMotion.HERO_FLYBY -> 1.25f
+        ThemeMotion.SKYLINE_GLIDE -> 1.1f
+        ThemeMotion.OWL_GLIDE -> 1.22f
+        ThemeMotion.CANDLE_FLOAT -> 1.28f
+        ThemeMotion.SPELL_SWIRL -> 1.34f
+        ThemeMotion.DUST_ASCEND -> 1.22f
+        ThemeMotion.MOON_DRIFT -> 1.12f
+        ThemeMotion.PARALLAX_SLIDE -> 1.05f
+        ThemeMotion.RUNE_GLOW -> 1.4f
         ThemeMotion.DRIFT -> 1.2f
     }
 
@@ -184,6 +312,17 @@ private fun ThemeDecorationSpec.scaleBoost(): Float =
         ThemeMotion.CLOUD_SWEEP -> 1.12f
         ThemeMotion.HEART_RISE -> 1.16f
         ThemeMotion.TWINKLE -> 1.18f
+        ThemeMotion.LIGHTNING_FLASH -> 1.18f
+        ThemeMotion.HERO_PULSE -> 1.2f
+        ThemeMotion.HERO_FLYBY -> 1.1f
+        ThemeMotion.SKYLINE_GLIDE -> 1f
+        ThemeMotion.OWL_GLIDE -> 1.06f
+        ThemeMotion.CANDLE_FLOAT -> 1.08f
+        ThemeMotion.SPELL_SWIRL -> 1.1f
+        ThemeMotion.DUST_ASCEND -> 1.02f
+        ThemeMotion.MOON_DRIFT -> 1.04f
+        ThemeMotion.PARALLAX_SLIDE -> 1f
+        ThemeMotion.RUNE_GLOW -> 1.15f
         ThemeMotion.DRIFT -> 1.04f
     }
 
@@ -199,6 +338,19 @@ private fun BackgroundDecoration(
             ThemeDecoration.BALLOON -> drawBalloon(colors)
             ThemeDecoration.STAR -> drawSparkle(colors)
             ThemeDecoration.HEART -> drawHeart(colors)
+            ThemeDecoration.LIGHTNING_BOLT -> drawLightningBolt(colors)
+            ThemeDecoration.COMIC_BURST -> drawComicBurst(colors)
+            ThemeDecoration.CITY_SKYLINE -> drawCitySkyline(colors)
+            ThemeDecoration.HERO_STAR -> drawHeroStar(colors)
+            ThemeDecoration.HERO_SILHOUETTE -> drawHeroSilhouette(colors)
+            ThemeDecoration.OWL -> drawOwl(colors)
+            ThemeDecoration.FLOATING_CANDLE -> drawFloatingCandle(colors)
+            ThemeDecoration.MAGIC_WAND_TRAIL -> drawMagicWandTrail(colors)
+            ThemeDecoration.CRESCENT_MOON -> drawCrescentMoon(colors)
+            ThemeDecoration.MAGIC_DUST -> drawMagicDust(colors)
+            ThemeDecoration.SCROLL -> drawScroll(colors)
+            ThemeDecoration.CASTLE_SILHOUETTE -> drawCastleSilhouette(colors)
+            ThemeDecoration.MAGIC_RUNE -> drawMagicRune(colors)
         }
     }
 }
