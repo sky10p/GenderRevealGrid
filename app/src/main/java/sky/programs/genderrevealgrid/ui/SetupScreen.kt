@@ -1,7 +1,8 @@
 package sky.programs.genderrevealgrid.ui
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
+import androidx.compose.foundation.selection.selectable
+import androidx.compose.foundation.selection.selectableGroup
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -19,9 +20,9 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.AssistChip
-import androidx.compose.material3.AssistChipDefaults
 import androidx.compose.material3.Button
+import androidx.compose.material3.FilterChip
+import androidx.compose.material3.FilterChipDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
@@ -32,6 +33,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.unit.dp
@@ -143,13 +145,17 @@ private fun GenderSelector(
         title = stringResource(R.string.winning_result_title),
         subtitle = stringResource(R.string.winning_result_subtitle)
     ) {
-        Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+        Row(
+            modifier = Modifier.selectableGroup(),
+            horizontalArrangement = Arrangement.spacedBy(12.dp)
+        ) {
             WinningGender.entries.forEach { gender ->
                 val selected = gender == selectedGender
-                AssistChip(
+                FilterChip(
                     modifier = Modifier.testTag(
                         if (gender == WinningGender.BOY) TestTags.SetupGenderBoy else TestTags.SetupGenderGirl
                     ),
+                    selected = selected,
                     onClick = { onSelected(gender) },
                     label = {
                         Text(
@@ -157,14 +163,18 @@ private fun GenderSelector(
                             fontWeight = if (selected) FontWeight.Bold else FontWeight.Medium
                         )
                     },
-                    colors = AssistChipDefaults.assistChipColors(
+                    colors = FilterChipDefaults.filterChipColors(
                         containerColor = if (selected) gender.accentColor().copy(alpha = 0.22f) else Color.White,
+                        selectedContainerColor = gender.accentColor().copy(alpha = 0.22f),
                         labelColor = Color(0xFF2B2D42)
                     ),
-                    border = AssistChipDefaults.assistChipBorder(
+                    border = FilterChipDefaults.filterChipBorder(
                         enabled = true,
-                        borderColor = if (selected) gender.accentColor() else Color(0xFFE4E7F1)
-                    )
+                        selected = selected,
+                        borderColor = Color(0xFFE4E7F1),
+                        selectedBorderColor = gender.accentColor()
+                    ),
+                    leadingIcon = null
                 )
             }
         }
@@ -255,7 +265,10 @@ private fun ThemePicker(
         title = stringResource(R.string.theme_visual_title),
         subtitle = stringResource(R.string.theme_visual_subtitle)
     ) {
-        Column(verticalArrangement = Arrangement.spacedBy(14.dp)) {
+        Column(
+            modifier = Modifier.selectableGroup(),
+            verticalArrangement = Arrangement.spacedBy(14.dp)
+        ) {
             themes.chunked(2).forEach { rowThemes ->
                 Row(
                     modifier = Modifier.fillMaxWidth(),
@@ -289,8 +302,12 @@ private fun ThemeCard(
         modifier = modifier
             .clip(RoundedCornerShape(24.dp))
             .background(theme.backgroundBrush())
-            .clickable(onClick = onClick)
             .testTag(TestTags.themeCard(theme.id))
+            .selectable(
+                selected = selected,
+                onClick = onClick,
+                role = Role.RadioButton
+            )
             .padding(14.dp)
     ) {
         Box(
