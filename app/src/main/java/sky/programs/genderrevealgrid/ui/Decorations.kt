@@ -20,6 +20,7 @@ import androidx.compose.ui.geometry.CornerRadius
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
@@ -39,6 +40,7 @@ internal fun AnimatedDecorationLayer(theme: ThemeConfig) {
     ) {
         val width = constraints.maxWidth
         val height = constraints.maxHeight
+        val density = LocalDensity.current
 
         theme.decorations.forEachIndexed { index, spec ->
             val transition = rememberInfiniteTransition(label = "decor-$index")
@@ -56,13 +58,15 @@ internal fun AnimatedDecorationLayer(theme: ThemeConfig) {
             )
 
             val horizontalWave = sin((progress * 2f * PI + index).toFloat())
+            val driftXPx = with(density) { spec.driftX.toPx() }
+            val driftYPx = with(density) { spec.driftY.toPx() }
             val xOffset = (
                 width * spec.xFraction +
-                    horizontalWave * spec.driftX.value * 2f
+                    horizontalWave * driftXPx * 2f
                 ).roundToInt()
             val yOffset = (
                 height * spec.yFraction +
-                    (-spec.driftY.value + spec.driftY.value * 2f * progress)
+                    (-driftYPx + driftYPx * 2f * progress)
                 ).roundToInt()
             val alpha = spec.minAlpha + (spec.maxAlpha - spec.minAlpha) * progress
 
