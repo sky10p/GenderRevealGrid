@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -34,8 +35,8 @@ import androidx.compose.ui.unit.sp
 import sky.programs.genderrevealgrid.model.ThemeConfig
 import sky.programs.genderrevealgrid.model.ThemeIcon
 import sky.programs.genderrevealgrid.model.WinningGender
-import sky.programs.genderrevealgrid.ui.theme.AccentScriptFamily
-import sky.programs.genderrevealgrid.ui.theme.RoundedSansFamily
+import sky.programs.genderrevealgrid.ui.theme.StageAccentFamily
+import sky.programs.genderrevealgrid.ui.theme.StageRoundedFamily
 
 @Composable
 internal fun HeroHeader(
@@ -127,12 +128,12 @@ internal fun ThemeIconBadge(
 ) {
     Box(
         modifier = modifier
-            .border(1.dp, Color.White.copy(alpha = 0.5f), CircleShape)
-            .background(Color.White.copy(alpha = 0.58f), CircleShape)
-            .padding(6.dp),
+            .border(1.dp, Color.White.copy(alpha = 0.72f), CircleShape)
+            .background(Color.White.copy(alpha = 0.7f), CircleShape)
+            .padding(7.dp),
         contentAlignment = Alignment.Center
     ) {
-        Canvas(modifier = Modifier.matchParentSize()) {
+        Canvas(modifier = Modifier.fillMaxSize()) {
             when (icon) {
                 ThemeIcon.BALLOON -> drawBalloon(colors)
                 ThemeIcon.CLOUD -> drawCloud(colors)
@@ -172,8 +173,10 @@ internal fun PlayfulMomentHeader(
                 Text(
                     text = eyebrow,
                     style = MaterialTheme.typography.labelLarge.copy(
+                        fontFamily = StageRoundedFamily,
                         letterSpacing = 1.1.sp,
-                        color = Color(0xFF7D7890)
+                        fontWeight = FontWeight.Bold,
+                        color = Color(0xFF8C879B)
                     ),
                     textAlign = TextAlign.Center
                 )
@@ -181,9 +184,10 @@ internal fun PlayfulMomentHeader(
             Text(
                 text = title,
                 style = MaterialTheme.typography.headlineLarge.copy(
-                    fontFamily = RoundedSansFamily,
-                    fontSize = 44.sp,
-                    lineHeight = 46.sp,
+                    fontFamily = StageRoundedFamily,
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 40.sp,
+                    lineHeight = 42.sp,
                     color = Color(0xFF25283D)
                 ),
                 textAlign = TextAlign.Center
@@ -191,10 +195,10 @@ internal fun PlayfulMomentHeader(
             Text(
                 text = subtitle,
                 style = MaterialTheme.typography.headlineMedium.copy(
-                    fontFamily = AccentScriptFamily,
+                    fontFamily = StageAccentFamily,
                     fontWeight = FontWeight.Normal,
-                    fontSize = 28.sp,
-                    lineHeight = 32.sp,
+                    fontSize = 26.sp,
+                    lineHeight = 30.sp,
                     color = Color(0xFFF39AC5)
                 ),
                 textAlign = TextAlign.Center
@@ -234,6 +238,24 @@ internal fun PremiumBadge() {
 
 internal fun ThemeConfig.backgroundBrush(): Brush = Brush.linearGradient(backgroundColors)
 
+internal fun ThemeConfig.boardPanelBrush(): Brush = Brush.linearGradient(
+    listOf(
+        boardFrameColor.copy(alpha = 0.98f),
+        Color.White.copy(alpha = 0.95f),
+        boardFrameColor.copy(alpha = 0.9f)
+    )
+)
+
+internal fun ThemeConfig.celebrationBrush(): Brush = Brush.linearGradient(
+    listOf(
+        Color.White.copy(alpha = 0.98f),
+        celebrationColors.first().copy(alpha = 0.22f),
+        celebrationColors.last().copy(alpha = 0.18f)
+    )
+)
+
+internal fun ThemeConfig.buttonBrush(): Brush = Brush.horizontalGradient(celebrationColors)
+
 internal fun WinningGender.accentColor(): Color =
     if (this == WinningGender.BOY) Color(0xFF73BEDC) else Color(0xFFF39AC5)
 
@@ -241,7 +263,29 @@ internal fun WinningGender.softColor(): Color =
     if (this == WinningGender.BOY) Color(0xFFEAF8FF) else Color(0xFFFFEFF7)
 
 internal fun DrawScope.drawCloud(colors: List<Color>) {
-    val base = colors.last().copy(alpha = 0.7f)
+    val base = Color.White.copy(alpha = 0.94f)
+    val tint = colors.last().copy(alpha = 0.22f)
+    drawCircle(
+        color = tint,
+        radius = size.minDimension * 0.25f,
+        center = Offset(size.width * 0.34f, size.height * 0.61f)
+    )
+    drawCircle(
+        color = tint,
+        radius = size.minDimension * 0.3f,
+        center = Offset(size.width * 0.52f, size.height * 0.47f)
+    )
+    drawCircle(
+        color = tint,
+        radius = size.minDimension * 0.24f,
+        center = Offset(size.width * 0.68f, size.height * 0.61f)
+    )
+    drawRoundRect(
+        color = tint,
+        topLeft = Offset(size.width * 0.2f, size.height * 0.58f),
+        size = Size(size.width * 0.6f, size.height * 0.22f),
+        cornerRadius = CornerRadius(size.minDimension * 0.12f)
+    )
     drawCircle(
         color = base,
         radius = size.minDimension * 0.23f,
@@ -266,29 +310,84 @@ internal fun DrawScope.drawCloud(colors: List<Color>) {
 }
 
 internal fun DrawScope.drawBalloon(colors: List<Color>) {
-    val strokeColor = Color(0xFF8E8CA8).copy(alpha = 0.72f)
+    val outlineColor = Color(0xFF7A7D96).copy(alpha = 0.68f)
+    val ropeColor = Color(0xFF9AA2B1).copy(alpha = 0.92f)
+    val balloonTop = Offset(size.width * 0.16f, size.height * 0.05f)
+    val balloonSize = Size(size.width * 0.68f, size.height * 0.6f)
+
     drawOval(
-        brush = Brush.verticalGradient(listOf(colors.first(), colors.last())),
-        topLeft = Offset(size.width * 0.18f, size.height * 0.06f),
-        size = Size(size.width * 0.64f, size.height * 0.58f)
+        color = colors.first().copy(alpha = 0.98f),
+        topLeft = balloonTop,
+        size = balloonSize
+    )
+
+    val stripeWidth = balloonSize.width / 4f
+    repeat(3) { index ->
+        drawRoundRect(
+            color = colors.last().copy(alpha = 0.96f),
+            topLeft = Offset(balloonTop.x + stripeWidth * (index + 0.4f), balloonTop.y),
+            size = Size(stripeWidth * 0.56f, balloonSize.height),
+            cornerRadius = CornerRadius(stripeWidth * 0.3f)
+        )
+    }
+
+    drawOval(
+        color = Color.White.copy(alpha = 0.34f),
+        topLeft = Offset(balloonTop.x + balloonSize.width * 0.14f, balloonTop.y + balloonSize.height * 0.08f),
+        size = Size(balloonSize.width * 0.22f, balloonSize.height * 0.2f)
+    )
+    drawArc(
+        color = outlineColor,
+        startAngle = 180f,
+        sweepAngle = 180f,
+        useCenter = false,
+        topLeft = balloonTop,
+        size = balloonSize,
+        style = Stroke(width = size.minDimension * 0.015f)
+    )
+    drawPath(
+        path = androidx.compose.ui.graphics.Path().apply {
+            moveTo(size.width * 0.18f, size.height * 0.33f)
+            quadraticTo(size.width * 0.5f, size.height * 0.52f, size.width * 0.82f, size.height * 0.33f)
+        },
+        color = outlineColor,
+        style = Stroke(width = size.minDimension * 0.013f)
     )
     drawLine(
-        color = strokeColor,
-        start = Offset(size.width * 0.5f, size.height * 0.64f),
-        end = Offset(size.width * 0.38f, size.height * 0.96f),
-        strokeWidth = size.minDimension * 0.02f
+        color = ropeColor,
+        start = Offset(size.width * 0.3f, size.height * 0.6f),
+        end = Offset(size.width * 0.4f, size.height * 0.84f),
+        strokeWidth = size.minDimension * 0.018f
     )
     drawLine(
-        color = strokeColor,
+        color = ropeColor,
+        start = Offset(size.width * 0.7f, size.height * 0.6f),
+        end = Offset(size.width * 0.6f, size.height * 0.84f),
+        strokeWidth = size.minDimension * 0.018f
+    )
+    drawLine(
+        color = ropeColor,
         start = Offset(size.width * 0.5f, size.height * 0.64f),
-        end = Offset(size.width * 0.62f, size.height * 0.96f),
-        strokeWidth = size.minDimension * 0.02f
+        end = Offset(size.width * 0.5f, size.height * 0.84f),
+        strokeWidth = size.minDimension * 0.018f
     )
     drawRoundRect(
-        color = Color(0xFFE4B562).copy(alpha = 0.88f),
-        topLeft = Offset(size.width * 0.36f, size.height * 0.83f),
-        size = Size(size.width * 0.28f, size.height * 0.1f),
-        cornerRadius = CornerRadius(size.minDimension * 0.04f)
+        color = Color(0xFFD9A557).copy(alpha = 0.92f),
+        topLeft = Offset(size.width * 0.36f, size.height * 0.84f),
+        size = Size(size.width * 0.28f, size.height * 0.12f),
+        cornerRadius = CornerRadius(size.minDimension * 0.05f)
+    )
+    drawLine(
+        color = Color(0xFFA86E1D).copy(alpha = 0.85f),
+        start = Offset(size.width * 0.38f, size.height * 0.88f),
+        end = Offset(size.width * 0.62f, size.height * 0.88f),
+        strokeWidth = size.minDimension * 0.018f
+    )
+    drawLine(
+        color = Color(0xFFA86E1D).copy(alpha = 0.52f),
+        start = Offset(size.width * 0.4f, size.height * 0.92f),
+        end = Offset(size.width * 0.6f, size.height * 0.92f),
+        strokeWidth = size.minDimension * 0.01f
     )
 }
 
@@ -296,20 +395,20 @@ internal fun DrawScope.drawSparkle(colors: List<Color>) {
     val center = Offset(size.width / 2f, size.height / 2f)
     val radius = size.minDimension * 0.28f
     drawLine(
-        brush = Brush.linearGradient(colors),
+        brush = Brush.linearGradient(listOf(Color(0xFFFFF3A8), Color(0xFFF7D91D), Color(0xFFFFF3A8))),
         start = Offset(center.x, center.y - radius),
         end = Offset(center.x, center.y + radius),
         strokeWidth = size.minDimension * 0.08f,
         pathEffect = PathEffect.cornerPathEffect(10f)
     )
     drawLine(
-        brush = Brush.linearGradient(colors.reversed()),
+        brush = Brush.linearGradient(listOf(Color(0xFFFFF3A8), Color(0xFFF7D91D), Color(0xFFFFF3A8))),
         start = Offset(center.x - radius, center.y),
         end = Offset(center.x + radius, center.y),
         strokeWidth = size.minDimension * 0.08f,
         pathEffect = PathEffect.cornerPathEffect(10f)
     )
-    drawCircle(color = colors.first(), radius = size.minDimension * 0.08f, center = center)
+    drawCircle(color = Color(0xFFFFF3A8), radius = size.minDimension * 0.08f, center = center)
 }
 
 internal fun DrawScope.drawHeart(colors: List<Color>) {
@@ -360,8 +459,8 @@ internal fun DrawScope.drawHeart(colors: List<Color>) {
         path = path,
         brush = Brush.verticalGradient(
             listOf(
-                colors.first().copy(alpha = 0.95f),
-                colors.last().copy(alpha = 0.72f)
+                colors.first().copy(alpha = 0.98f),
+                colors.last().copy(alpha = 0.84f)
             )
         )
     )

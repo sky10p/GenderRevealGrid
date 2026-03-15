@@ -2,12 +2,19 @@ package sky.programs.genderrevealgrid.ui.theme
 
 import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
+import sky.programs.genderrevealgrid.R
 
 val RoundedSansFamily = FontFamily.SansSerif
 val AccentScriptFamily = FontFamily.Cursive
+val StageRoundedFamily = FontFamily(
+    Font(R.font.quicksand_like_regular, FontWeight.Normal),
+    Font(R.font.quicksand_like_bold, FontWeight.Bold)
+)
+val StageAccentFamily = FontFamily(Font(R.font.pacifico_like_regular, FontWeight.Normal))
 
 val Typography = Typography(
     headlineLarge = TextStyle(

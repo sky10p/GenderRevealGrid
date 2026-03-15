@@ -14,7 +14,11 @@ data class ThemeConfig(
     val backgroundColors: List<Color>,
     val icon: ThemeIcon,
     val decorations: List<ThemeDecorationSpec>,
-    val isPremium: Boolean
+    val isPremium: Boolean,
+    val boardFrameColor: Color,
+    val boardStrokeColor: Color,
+    val celebrationColors: List<Color>,
+    val celebrationAccent: Color
 )
 
 enum class ThemeIcon {
@@ -30,6 +34,14 @@ enum class ThemeDecoration {
     HEART,
 }
 
+enum class ThemeMotion {
+    DRIFT,
+    BALLOON_SWAY,
+    CLOUD_SWEEP,
+    HEART_RISE,
+    TWINKLE,
+}
+
 @Immutable
 data class ThemeDecorationSpec(
     val type: ThemeDecoration,
@@ -40,7 +52,11 @@ data class ThemeDecorationSpec(
     val driftX: Dp,
     val driftY: Dp,
     val minAlpha: Float,
-    val maxAlpha: Float
+    val maxAlpha: Float,
+    val motion: ThemeMotion = ThemeMotion.DRIFT,
+    val phaseOffset: Float = 0f,
+    val mirrorHorizontally: Boolean = false,
+    val rotationDegrees: Float = 0f
 )
 
 enum class WinningGender {
@@ -95,13 +111,120 @@ object RevealCatalog {
             backgroundColors = listOf(Color(0xFFFFF6EF), Color(0xFFFFE8F4), Color(0xFFD9F1FF)),
             icon = ThemeIcon.BALLOON,
             decorations = listOf(
-                decorationSpec(ThemeDecoration.CLOUD, 0.08f, 0.12f, 78.dp, 4200, 12.dp, 22.dp, 0.26f, 0.52f),
-                decorationSpec(ThemeDecoration.BALLOON, 0.78f, 0.14f, 92.dp, 5200, 10.dp, 30.dp, 0.22f, 0.44f),
-                decorationSpec(ThemeDecoration.CLOUD, 0.14f, 0.72f, 62.dp, 4600, 14.dp, 20.dp, 0.24f, 0.46f),
-                decorationSpec(ThemeDecoration.BALLOON, 0.82f, 0.74f, 58.dp, 5000, 9.dp, 26.dp, 0.2f, 0.42f),
-                decorationSpec(ThemeDecoration.STAR, 0.62f, 0.84f, 36.dp, 3600, 8.dp, 14.dp, 0.22f, 0.48f)
+                decorationSpec(
+                    type = ThemeDecoration.BALLOON,
+                    xFraction = 0.06f,
+                    yFraction = 0.12f,
+                    size = 156.dp,
+                    durationMillis = 9200,
+                    driftX = 18.dp,
+                    driftY = 28.dp,
+                    minAlpha = 0.46f,
+                    maxAlpha = 0.72f,
+                    motion = ThemeMotion.BALLOON_SWAY,
+                    rotationDegrees = -6f
+                ),
+                decorationSpec(
+                    type = ThemeDecoration.BALLOON,
+                    xFraction = 0.88f,
+                    yFraction = 0.34f,
+                    size = 136.dp,
+                    durationMillis = 9800,
+                    driftX = 16.dp,
+                    driftY = 26.dp,
+                    minAlpha = 0.4f,
+                    maxAlpha = 0.66f,
+                    motion = ThemeMotion.BALLOON_SWAY,
+                    phaseOffset = 0.42f,
+                    mirrorHorizontally = true,
+                    rotationDegrees = 4f
+                ),
+                decorationSpec(
+                    type = ThemeDecoration.CLOUD,
+                    xFraction = 0.1f,
+                    yFraction = 0.18f,
+                    size = 138.dp,
+                    durationMillis = 32000,
+                    driftX = 0.dp,
+                    driftY = 8.dp,
+                    minAlpha = 0.54f,
+                    maxAlpha = 0.82f,
+                    motion = ThemeMotion.CLOUD_SWEEP,
+                    phaseOffset = 0.12f
+                ),
+                decorationSpec(
+                    type = ThemeDecoration.CLOUD,
+                    xFraction = 0.12f,
+                    yFraction = 0.72f,
+                    size = 126.dp,
+                    durationMillis = 28000,
+                    driftX = 0.dp,
+                    driftY = 8.dp,
+                    minAlpha = 0.48f,
+                    maxAlpha = 0.76f,
+                    motion = ThemeMotion.CLOUD_SWEEP,
+                    phaseOffset = 0.56f
+                ),
+                decorationSpec(
+                    type = ThemeDecoration.HEART,
+                    xFraction = 0.2f,
+                    yFraction = 0.78f,
+                    size = 42.dp,
+                    durationMillis = 17000,
+                    driftX = 28.dp,
+                    driftY = 24.dp,
+                    minAlpha = 0.24f,
+                    maxAlpha = 0.56f,
+                    motion = ThemeMotion.HEART_RISE,
+                    phaseOffset = 0.3f,
+                    rotationDegrees = -10f
+                ),
+                decorationSpec(
+                    type = ThemeDecoration.STAR,
+                    xFraction = 0.64f,
+                    yFraction = 0.84f,
+                    size = 38.dp,
+                    durationMillis = 3600,
+                    driftX = 8.dp,
+                    driftY = 8.dp,
+                    minAlpha = 0.36f,
+                    maxAlpha = 0.76f,
+                    motion = ThemeMotion.TWINKLE,
+                    phaseOffset = 0.18f
+                ),
+                decorationSpec(
+                    type = ThemeDecoration.STAR,
+                    xFraction = 0.86f,
+                    yFraction = 0.08f,
+                    size = 34.dp,
+                    durationMillis = 3300,
+                    driftX = 8.dp,
+                    driftY = 8.dp,
+                    minAlpha = 0.34f,
+                    maxAlpha = 0.72f,
+                    motion = ThemeMotion.TWINKLE,
+                    phaseOffset = 0.64f
+                ),
+                decorationSpec(
+                    type = ThemeDecoration.HEART,
+                    xFraction = 0.74f,
+                    yFraction = 0.9f,
+                    size = 38.dp,
+                    durationMillis = 17600,
+                    driftX = 24.dp,
+                    driftY = 22.dp,
+                    minAlpha = 0.22f,
+                    maxAlpha = 0.5f,
+                    motion = ThemeMotion.HEART_RISE,
+                    phaseOffset = 0.72f,
+                    rotationDegrees = 12f
+                )
             ),
-            isPremium = false
+            isPremium = false,
+            boardFrameColor = Color(0xFFFFFDFB),
+            boardStrokeColor = Color(0xFFFFD6E6),
+            celebrationColors = listOf(Color(0xFFF7B8D2), Color(0xFF9EDCFF)),
+            celebrationAccent = Color(0xFFF39AC5)
         ),
         ThemeConfig(
             id = "golden-dust",
@@ -109,13 +232,118 @@ object RevealCatalog {
             backgroundColors = listOf(Color(0xFFFFFBF2), Color(0xFFFFF1C9), Color(0xFFFFD8E0)),
             icon = ThemeIcon.SPARKLES,
             decorations = listOf(
-                decorationSpec(ThemeDecoration.STAR, 0.1f, 0.16f, 40.dp, 3500, 18.dp, 16.dp, 0.3f, 0.6f),
-                decorationSpec(ThemeDecoration.HEART, 0.8f, 0.12f, 42.dp, 3900, 12.dp, 18.dp, 0.24f, 0.52f),
-                decorationSpec(ThemeDecoration.STAR, 0.18f, 0.72f, 34.dp, 3300, 16.dp, 14.dp, 0.28f, 0.58f),
-                decorationSpec(ThemeDecoration.HEART, 0.76f, 0.78f, 38.dp, 4200, 14.dp, 16.dp, 0.22f, 0.48f),
-                decorationSpec(ThemeDecoration.STAR, 0.56f, 0.88f, 30.dp, 3000, 10.dp, 10.dp, 0.28f, 0.56f)
+                decorationSpec(
+                    type = ThemeDecoration.BALLOON,
+                    xFraction = 0.08f,
+                    yFraction = 0.14f,
+                    size = 136.dp,
+                    durationMillis = 9600,
+                    driftX = 14.dp,
+                    driftY = 24.dp,
+                    minAlpha = 0.4f,
+                    maxAlpha = 0.68f,
+                    motion = ThemeMotion.BALLOON_SWAY,
+                    rotationDegrees = -4f
+                ),
+                decorationSpec(
+                    type = ThemeDecoration.CLOUD,
+                    xFraction = 0.12f,
+                    yFraction = 0.22f,
+                    size = 124.dp,
+                    durationMillis = 30000,
+                    driftX = 0.dp,
+                    driftY = 6.dp,
+                    minAlpha = 0.46f,
+                    maxAlpha = 0.76f,
+                    motion = ThemeMotion.CLOUD_SWEEP,
+                    phaseOffset = 0.08f
+                ),
+                decorationSpec(
+                    type = ThemeDecoration.HEART,
+                    xFraction = 0.8f,
+                    yFraction = 0.82f,
+                    size = 44.dp,
+                    durationMillis = 16800,
+                    driftX = 18.dp,
+                    driftY = 22.dp,
+                    minAlpha = 0.28f,
+                    maxAlpha = 0.54f,
+                    motion = ThemeMotion.HEART_RISE,
+                    phaseOffset = 0.5f,
+                    rotationDegrees = 8f
+                ),
+                decorationSpec(
+                    type = ThemeDecoration.STAR,
+                    xFraction = 0.2f,
+                    yFraction = 0.72f,
+                    size = 40.dp,
+                    durationMillis = 3200,
+                    driftX = 8.dp,
+                    driftY = 8.dp,
+                    minAlpha = 0.38f,
+                    maxAlpha = 0.8f,
+                    motion = ThemeMotion.TWINKLE,
+                    phaseOffset = 0.14f
+                ),
+                decorationSpec(
+                    type = ThemeDecoration.STAR,
+                    xFraction = 0.82f,
+                    yFraction = 0.16f,
+                    size = 36.dp,
+                    durationMillis = 3400,
+                    driftX = 8.dp,
+                    driftY = 8.dp,
+                    minAlpha = 0.36f,
+                    maxAlpha = 0.76f,
+                    motion = ThemeMotion.TWINKLE,
+                    phaseOffset = 0.42f
+                ),
+                decorationSpec(
+                    type = ThemeDecoration.STAR,
+                    xFraction = 0.58f,
+                    yFraction = 0.88f,
+                    size = 34.dp,
+                    durationMillis = 3000,
+                    driftX = 6.dp,
+                    driftY = 6.dp,
+                    minAlpha = 0.36f,
+                    maxAlpha = 0.72f,
+                    motion = ThemeMotion.TWINKLE,
+                    phaseOffset = 0.72f
+                ),
+                decorationSpec(
+                    type = ThemeDecoration.HEART,
+                    xFraction = 0.16f,
+                    yFraction = 0.88f,
+                    size = 40.dp,
+                    durationMillis = 16400,
+                    driftX = 22.dp,
+                    driftY = 20.dp,
+                    minAlpha = 0.24f,
+                    maxAlpha = 0.48f,
+                    motion = ThemeMotion.HEART_RISE,
+                    phaseOffset = 0.24f,
+                    rotationDegrees = -12f
+                ),
+                decorationSpec(
+                    type = ThemeDecoration.STAR,
+                    xFraction = 0.68f,
+                    yFraction = 0.1f,
+                    size = 34.dp,
+                    durationMillis = 3000,
+                    driftX = 8.dp,
+                    driftY = 8.dp,
+                    minAlpha = 0.34f,
+                    maxAlpha = 0.74f,
+                    motion = ThemeMotion.TWINKLE,
+                    phaseOffset = 0.82f
+                )
             ),
-            isPremium = false
+            isPremium = false,
+            boardFrameColor = Color(0xFFFFFEF7),
+            boardStrokeColor = Color(0xFFF9E1A6),
+            celebrationColors = listOf(Color(0xFFFFD98C), Color(0xFFFFC1D6)),
+            celebrationAccent = Color(0xFFF0B248)
         ),
         ThemeConfig(
             id = "twilight-clouds",
@@ -123,13 +351,120 @@ object RevealCatalog {
             backgroundColors = listOf(Color(0xFFF7F4FF), Color(0xFFE0E8FF), Color(0xFFFFE1EE)),
             icon = ThemeIcon.CLOUD,
             decorations = listOf(
-                decorationSpec(ThemeDecoration.CLOUD, 0.06f, 0.12f, 88.dp, 5200, 10.dp, 24.dp, 0.22f, 0.46f),
-                decorationSpec(ThemeDecoration.STAR, 0.84f, 0.16f, 28.dp, 3100, 18.dp, 12.dp, 0.26f, 0.6f),
-                decorationSpec(ThemeDecoration.CLOUD, 0.16f, 0.78f, 70.dp, 4700, 12.dp, 22.dp, 0.2f, 0.42f),
-                decorationSpec(ThemeDecoration.BALLOON, 0.78f, 0.7f, 54.dp, 5400, 8.dp, 28.dp, 0.18f, 0.38f),
-                decorationSpec(ThemeDecoration.STAR, 0.58f, 0.86f, 26.dp, 3200, 14.dp, 14.dp, 0.26f, 0.58f)
+                decorationSpec(
+                    type = ThemeDecoration.CLOUD,
+                    xFraction = 0.08f,
+                    yFraction = 0.16f,
+                    size = 148.dp,
+                    durationMillis = 34000,
+                    driftX = 0.dp,
+                    driftY = 8.dp,
+                    minAlpha = 0.44f,
+                    maxAlpha = 0.74f,
+                    motion = ThemeMotion.CLOUD_SWEEP,
+                    phaseOffset = 0.16f
+                ),
+                decorationSpec(
+                    type = ThemeDecoration.CLOUD,
+                    xFraction = 0.2f,
+                    yFraction = 0.72f,
+                    size = 124.dp,
+                    durationMillis = 30000,
+                    driftX = 0.dp,
+                    driftY = 8.dp,
+                    minAlpha = 0.38f,
+                    maxAlpha = 0.66f,
+                    motion = ThemeMotion.CLOUD_SWEEP,
+                    phaseOffset = 0.62f
+                ),
+                decorationSpec(
+                    type = ThemeDecoration.BALLOON,
+                    xFraction = 0.84f,
+                    yFraction = 0.22f,
+                    size = 122.dp,
+                    durationMillis = 10200,
+                    driftX = 12.dp,
+                    driftY = 28.dp,
+                    minAlpha = 0.36f,
+                    maxAlpha = 0.58f,
+                    motion = ThemeMotion.BALLOON_SWAY,
+                    phaseOffset = 0.33f,
+                    mirrorHorizontally = true,
+                    rotationDegrees = 6f
+                ),
+                decorationSpec(
+                    type = ThemeDecoration.STAR,
+                    xFraction = 0.82f,
+                    yFraction = 0.14f,
+                    size = 34.dp,
+                    durationMillis = 3000,
+                    driftX = 6.dp,
+                    driftY = 6.dp,
+                    minAlpha = 0.4f,
+                    maxAlpha = 0.78f,
+                    motion = ThemeMotion.TWINKLE,
+                    phaseOffset = 0.12f
+                ),
+                decorationSpec(
+                    type = ThemeDecoration.STAR,
+                    xFraction = 0.58f,
+                    yFraction = 0.86f,
+                    size = 32.dp,
+                    durationMillis = 3400,
+                    driftX = 6.dp,
+                    driftY = 6.dp,
+                    minAlpha = 0.38f,
+                    maxAlpha = 0.72f,
+                    motion = ThemeMotion.TWINKLE,
+                    phaseOffset = 0.52f
+                ),
+                decorationSpec(
+                    type = ThemeDecoration.HEART,
+                    xFraction = 0.18f,
+                    yFraction = 0.84f,
+                    size = 38.dp,
+                    durationMillis = 18000,
+                    driftX = 20.dp,
+                    driftY = 20.dp,
+                    minAlpha = 0.22f,
+                    maxAlpha = 0.44f,
+                    motion = ThemeMotion.HEART_RISE,
+                    phaseOffset = 0.45f,
+                    rotationDegrees = -8f
+                ),
+                decorationSpec(
+                    type = ThemeDecoration.STAR,
+                    xFraction = 0.34f,
+                    yFraction = 0.24f,
+                    size = 34.dp,
+                    durationMillis = 3200,
+                    driftX = 8.dp,
+                    driftY = 8.dp,
+                    minAlpha = 0.34f,
+                    maxAlpha = 0.72f,
+                    motion = ThemeMotion.TWINKLE,
+                    phaseOffset = 0.3f
+                ),
+                decorationSpec(
+                    type = ThemeDecoration.HEART,
+                    xFraction = 0.8f,
+                    yFraction = 0.9f,
+                    size = 36.dp,
+                    durationMillis = 17400,
+                    driftX = 22.dp,
+                    driftY = 20.dp,
+                    minAlpha = 0.2f,
+                    maxAlpha = 0.42f,
+                    motion = ThemeMotion.HEART_RISE,
+                    phaseOffset = 0.68f,
+                    rotationDegrees = 10f
+                )
             ),
-            isPremium = true
+            isPremium = true,
+            boardFrameColor = Color(0xFFFDFBFF),
+            boardStrokeColor = Color(0xFFD7DDFE),
+            celebrationColors = listOf(Color(0xFFC1CFFF), Color(0xFFF8B7D1)),
+            celebrationAccent = Color(0xFF90A8F8)
         ),
         ThemeConfig(
             id = "celebration-pop",
@@ -137,13 +472,121 @@ object RevealCatalog {
             backgroundColors = listOf(Color(0xFFFFF3F1), Color(0xFFE7F8FF), Color(0xFFFFE0F2)),
             icon = ThemeIcon.BALLOON,
             decorations = listOf(
-                decorationSpec(ThemeDecoration.HEART, 0.08f, 0.14f, 44.dp, 3300, 18.dp, 18.dp, 0.3f, 0.6f),
-                decorationSpec(ThemeDecoration.BALLOON, 0.8f, 0.12f, 86.dp, 5000, 12.dp, 30.dp, 0.22f, 0.46f),
-                decorationSpec(ThemeDecoration.HEART, 0.18f, 0.74f, 40.dp, 3600, 16.dp, 18.dp, 0.26f, 0.54f),
-                decorationSpec(ThemeDecoration.BALLOON, 0.82f, 0.76f, 62.dp, 4600, 10.dp, 28.dp, 0.22f, 0.44f),
-                decorationSpec(ThemeDecoration.STAR, 0.56f, 0.86f, 34.dp, 3100, 18.dp, 14.dp, 0.28f, 0.6f)
+                decorationSpec(
+                    type = ThemeDecoration.BALLOON,
+                    xFraction = 0.06f,
+                    yFraction = 0.14f,
+                    size = 162.dp,
+                    durationMillis = 9000,
+                    driftX = 18.dp,
+                    driftY = 30.dp,
+                    minAlpha = 0.48f,
+                    maxAlpha = 0.76f,
+                    motion = ThemeMotion.BALLOON_SWAY,
+                    rotationDegrees = -5f
+                ),
+                decorationSpec(
+                    type = ThemeDecoration.BALLOON,
+                    xFraction = 0.9f,
+                    yFraction = 0.22f,
+                    size = 140.dp,
+                    durationMillis = 9800,
+                    driftX = 16.dp,
+                    driftY = 28.dp,
+                    minAlpha = 0.42f,
+                    maxAlpha = 0.68f,
+                    motion = ThemeMotion.BALLOON_SWAY,
+                    phaseOffset = 0.38f,
+                    mirrorHorizontally = true,
+                    rotationDegrees = 5f
+                ),
+                decorationSpec(
+                    type = ThemeDecoration.CLOUD,
+                    xFraction = 0.1f,
+                    yFraction = 0.18f,
+                    size = 132.dp,
+                    durationMillis = 30000,
+                    driftX = 0.dp,
+                    driftY = 8.dp,
+                    minAlpha = 0.52f,
+                    maxAlpha = 0.82f,
+                    motion = ThemeMotion.CLOUD_SWEEP,
+                    phaseOffset = 0.2f
+                ),
+                decorationSpec(
+                    type = ThemeDecoration.HEART,
+                    xFraction = 0.22f,
+                    yFraction = 0.82f,
+                    size = 46.dp,
+                    durationMillis = 16200,
+                    driftX = 26.dp,
+                    driftY = 24.dp,
+                    minAlpha = 0.28f,
+                    maxAlpha = 0.58f,
+                    motion = ThemeMotion.HEART_RISE,
+                    phaseOffset = 0.24f,
+                    rotationDegrees = -10f
+                ),
+                decorationSpec(
+                    type = ThemeDecoration.HEART,
+                    xFraction = 0.78f,
+                    yFraction = 0.92f,
+                    size = 40.dp,
+                    durationMillis = 17800,
+                    driftX = 20.dp,
+                    driftY = 22.dp,
+                    minAlpha = 0.24f,
+                    maxAlpha = 0.48f,
+                    motion = ThemeMotion.HEART_RISE,
+                    phaseOffset = 0.62f,
+                    rotationDegrees = 12f
+                ),
+                decorationSpec(
+                    type = ThemeDecoration.STAR,
+                    xFraction = 0.56f,
+                    yFraction = 0.86f,
+                    size = 40.dp,
+                    durationMillis = 3100,
+                    driftX = 8.dp,
+                    driftY = 8.dp,
+                    minAlpha = 0.4f,
+                    maxAlpha = 0.82f,
+                    motion = ThemeMotion.TWINKLE,
+                    phaseOffset = 0.48f
+                ),
+                decorationSpec(
+                    type = ThemeDecoration.STAR,
+                    xFraction = 0.16f,
+                    yFraction = 0.24f,
+                    size = 36.dp,
+                    durationMillis = 3200,
+                    driftX = 8.dp,
+                    driftY = 8.dp,
+                    minAlpha = 0.38f,
+                    maxAlpha = 0.8f,
+                    motion = ThemeMotion.TWINKLE,
+                    phaseOffset = 0.84f
+                ),
+                decorationSpec(
+                    type = ThemeDecoration.HEART,
+                    xFraction = 0.66f,
+                    yFraction = 0.88f,
+                    size = 42.dp,
+                    durationMillis = 16800,
+                    driftX = 24.dp,
+                    driftY = 22.dp,
+                    minAlpha = 0.26f,
+                    maxAlpha = 0.56f,
+                    motion = ThemeMotion.HEART_RISE,
+                    phaseOffset = 0.4f,
+                    rotationDegrees = 12f
+                )
             ),
-            isPremium = true
+            isPremium = true,
+            boardFrameColor = Color(0xFFFFFCFB),
+            boardStrokeColor = Color(0xFFFFD3E4),
+            celebrationColors = listOf(Color(0xFFF8AFCB), Color(0xFF7DCDF3)),
+            celebrationAccent = Color(0xFFF07FB5)
         )
     )
 
@@ -162,7 +605,11 @@ private fun decorationSpec(
     driftX: Dp,
     driftY: Dp,
     minAlpha: Float,
-    maxAlpha: Float
+    maxAlpha: Float,
+    motion: ThemeMotion = ThemeMotion.DRIFT,
+    phaseOffset: Float = 0f,
+    mirrorHorizontally: Boolean = false,
+    rotationDegrees: Float = 0f
 ): ThemeDecorationSpec = ThemeDecorationSpec(
     type = type,
     xFraction = xFraction,
@@ -172,5 +619,9 @@ private fun decorationSpec(
     driftX = driftX,
     driftY = driftY,
     minAlpha = minAlpha,
-    maxAlpha = maxAlpha
+    maxAlpha = maxAlpha,
+    motion = motion,
+    phaseOffset = phaseOffset,
+    mirrorHorizontally = mirrorHorizontally,
+    rotationDegrees = rotationDegrees
 )

@@ -30,6 +30,8 @@
 
     <string name="revealed_progress_title">Progreso descubierto</string>
     <string name="revealed_progress_subtitle">Aquí solo se cuentan los círculos ya descubiertos, así que la respuesta final sigue oculta hasta el último toque.</string>
+    <string name="gameplay_header_eyebrow">Un misterio dulce sobre papel</string>
+    <string name="celebration_kicker">El noveno círculo contó la historia</string>
     <string name="boys_revealed_label">Niño</string>
     <string name="girls_revealed_label">Niña</string>
     <string name="hidden_revealed_label">Ocultas</string>
@@ -39,7 +41,7 @@
     <string name="default_board_title">¡Sorpresa!</string>
     <string name="default_board_subtitle">¿Qué será el bebé?</string>
     <string name="default_boy_title">¡Es niño!</string>
-    <string name="default_boy_subtitle">Nueve círculos para descubrir la gran sorpresa.</string>
+    <string name="default_boy_subtitle">La familia crece con un hermoso niño</string>
     <string name="default_girl_title">¡Es niña!</string>
-    <string name="default_girl_subtitle">Cada carta acercó un poco más el gran momento.</string>
+    <string name="default_girl_subtitle">La familia crece con una hermosa niña</string>
 </resources>

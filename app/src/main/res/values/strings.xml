@@ -30,6 +30,8 @@
 
     <string name="revealed_progress_title">Reveal progress</string>
     <string name="revealed_progress_subtitle">Only discovered circles are counted here, so the final answer stays hidden until the last tap.</string>
+    <string name="gameplay_header_eyebrow">A paper-sweet little mystery</string>
+    <string name="celebration_kicker">The ninth circle told the story</string>
     <string name="boys_revealed_label">Boy</string>
     <string name="girls_revealed_label">Girl</string>
     <string name="hidden_revealed_label">Hidden</string>
@@ -39,7 +41,7 @@
     <string name="default_board_title">Surprise!</string>
     <string name="default_board_subtitle">What will baby be?</string>
     <string name="default_boy_title">It\'s a boy!</string>
-    <string name="default_boy_subtitle">Nine circles to uncover the big surprise.</string>
+    <string name="default_boy_subtitle">The family grows with a beautiful boy.</string>
     <string name="default_girl_title">It\'s a girl!</string>
-    <string name="default_girl_subtitle">Each card brought the big moment closer.</string>
+    <string name="default_girl_subtitle">The family grows with a beautiful girl.</string>
 </resources>
