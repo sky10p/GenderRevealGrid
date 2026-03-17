@@ -40,6 +40,7 @@ import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.unit.dp
+import sky.programs.genderrevealgrid.BuildConfig
 import sky.programs.genderrevealgrid.R
 import sky.programs.genderrevealgrid.model.ThemeConfig
 import sky.programs.genderrevealgrid.model.WinningGender
@@ -139,11 +140,13 @@ internal fun SetupScreen(
                     onTitleChanged = onCelebrationTitleChanged,
                     onSubtitleChanged = onCelebrationSubtitleChanged
                 )
-                ThemePicker(
-                    themes = themes,
-                    selectedTheme = selectedTheme,
-                    onThemeSelected = onThemeSelected
-                )
+                if (BuildConfig.DEBUG) {
+                    ThemePicker(
+                        themes = themes,
+                        selectedTheme = selectedTheme,
+                        onThemeSelected = onThemeSelected
+                    )
+                }
                 Spacer(modifier = Modifier.height(180.dp))
             }
         }
