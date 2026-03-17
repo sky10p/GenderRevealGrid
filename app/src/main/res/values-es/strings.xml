@@ -2,7 +2,7 @@
     <string name="app_name">Gender Reveal Grid</string>
 
     <string name="setup_title">Configura la sorpresa</string>
-    <string name="setup_subtitle">Elige el resultado ganador, personaliza el momento del tablero y el mensaje final, y selecciona el tema.</string>
+    <string name="setup_subtitle">Elige el resultado ganador, personaliza la intro del tablero y el mensaje final de celebración.</string>
     <string name="start_reveal">Comenzar revelación</string>
 
     <string name="winning_result_title">Resultado ganador</string>
@@ -34,7 +34,7 @@
     <string name="celebration_kicker">El noveno círculo contó la historia</string>
     <string name="boys_revealed_label">Niño</string>
     <string name="girls_revealed_label">Niña</string>
-    <string name="hidden_revealed_label">Ocultas</string>
+    <string name="hidden_revealed_label">Ocultos</string>
 
     <string name="back_to_setup">Volver a configuración</string>
 
@@ -53,7 +53,7 @@
     <string name="default_superhero_girl_subtitle">La insignia final se enciende para una valiente niña.</string>
 
     <string name="default_magic_world_board_title">Hay un hechizo esperando</string>
-    <string name="default_magic_world_board_subtitle">Bajo la noche del castillo, el secreto final sigue oculto hasta el ultimo toque.</string>
+    <string name="default_magic_world_board_subtitle">Bajo la noche del castillo, el secreto final sigue oculto hasta el último toque.</string>
     <string name="default_magic_world_boy_title">El hechizo revela un niño</string>
     <string name="default_magic_world_boy_subtitle">Las velas brillan y la noche encantada da la bienvenida a un niño.</string>
     <string name="default_magic_world_girl_title">El hechizo revela una niña</string>

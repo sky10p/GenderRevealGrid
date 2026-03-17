@@ -2,7 +2,7 @@
     <string name="app_name">Gender Reveal Grid</string>
 
     <string name="setup_title">Set up the reveal</string>
-    <string name="setup_subtitle">Choose the winning result, customize the board moment and final message, and select the board theme.</string>
+    <string name="setup_subtitle">Choose the winning result, then customize the board intro and the final celebration message.</string>
     <string name="start_reveal">Start reveal</string>
 
     <string name="winning_result_title">Winning result</string>
