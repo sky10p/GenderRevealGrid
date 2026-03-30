@@ -1,5 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="Theme.GenderRevealGrid" parent="android:Theme.Material.Light.NoActionBar" />
+    <style name="Theme.GenderRevealGrid" parent="android:Theme.Material.Light.NoActionBar">
+        <item name="android:windowBackground">@color/brand_background</item>
+    </style>
+
+    <style name="Theme.GenderRevealGrid.Starting" parent="Theme.SplashScreen.IconBackground">
+        <item name="windowSplashScreenBackground">@color/brand_splash_background</item>
+        <item name="windowSplashScreenAnimatedIcon">@drawable/brand_balloon_mark</item>
+        <item name="windowSplashScreenIconBackgroundColor">@color/brand_medallion</item>
+        <item name="postSplashScreenTheme">@style/Theme.GenderRevealGrid</item>
+    </style>
 </resources>

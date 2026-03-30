@@ -1,0 +1,6 @@
+<resources>
+    <plurals name="reveal_remaining_instruction">
+        <item quantity="one">Revela el último %d círculo para conocer la respuesta.</item>
+        <item quantity="other">Revela los %d círculos que faltan para mantener el suspenso equilibrado.</item>
+    </plurals>
+</resources>

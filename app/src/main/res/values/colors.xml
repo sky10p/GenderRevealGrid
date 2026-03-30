@@ -1,5 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <color name="brand_background">#FFFDF8F3</color>
+    <color name="brand_splash_background">#FFF9F2ED</color>
+    <color name="brand_medallion">#FFFDFBFF</color>
+    <color name="brand_medallion_stroke">#FFD7E6F1</color>
+    <color name="brand_blue">#FFA8D9F3</color>
+    <color name="brand_blue_deep">#FF76AFC7</color>
+    <color name="brand_pink">#FFF6B6D1</color>
+    <color name="brand_pink_deep">#FFE98FB8</color>
+    <color name="brand_cream">#FFF6D9A5</color>
+    <color name="brand_cream_deep">#FFD5A156</color>
+    <color name="brand_outline">#FF7E92A3</color>
     <color name="purple_200">#FFBB86FC</color>
     <color name="purple_500">#FF6200EE</color>
     <color name="purple_700">#FF3700B3</color>
